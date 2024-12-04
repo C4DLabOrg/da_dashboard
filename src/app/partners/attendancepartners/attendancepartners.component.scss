@@ -1,0 +1,7 @@
+@import "../../../assets/styles/scss/loading/loading";
+
+.datatable,
+.datatable > div,
+.datatable.fixed-header .datatable-header .datatable-header-inner {
+	height: 100%;
+}

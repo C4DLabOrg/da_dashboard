@@ -1,0 +1,95 @@
+<div *ngIf="loading == true" class="positioning">
+  <md-progress-spinner _ngcontent-c21="" class="primary mat-progress-spinner" mode="indeterminate" role="progressbar" _nghost-c22="" style="width:60%;">
+    <svg _ngcontent-c22="" preserveAspectRatio="xMidYMid meet" viewBox="0 0 100 100">
+      <path _ngcontent-c22="" d="M67.03072947941752,13.806709829045673A40,40 0 0,1 75.14319329354475,18.890197187969093" style="stroke-width: 10;"></path>
+    </svg>
+  </md-progress-spinner>
+</div>
+<div><!-- 
+  <md-card>
+    <md-card-content>
+      <form [formGroup]="form" (ngSubmit)="searchPartner(form.value);">
+        <md-input placeholder="Search by name" required  [formControl]="form.controls['search']" style="width: 98%" class="mb-1 ml-1 mr-1"></md-input>
+        <small *ngIf="form.controls['search'].hasError('required') && form.controls['search'].touched" class="md-text-warn">Kindly input the partner's name.</small>
+        <md-card-actions>
+          <button type="submit" md-raised-button class="shadow-none">Search</button>
+        </md-card-actions>
+      </form>
+    </md-card-content>
+  </md-card> -->
+  <div fxLayout="row"  fxLayoutWrap="wrap">
+  <div fxFlex.gt-sm="100" fxFlex="100"> 
+      <md-card>
+        <md-card-title>Attendance data submitted by schools based on selected timelines</md-card-title>
+        <md-card-content>
+          <form [formGroup]="attendanceform" (ngSubmit)="onSubmit(attendanceform.value);" >
+            <div  fxLayout="row"><div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 100%;">
+                  <md-input placeholder="Start Date (required)" [formControl]="attendanceform.controls['startDate']" type="date"></md-input>
+                  <small *ngIf="attendanceform.controls['startDate'].hasError('required') && attendanceform.controls['startDate'].touched" class="md-text-warn">Kindly include a date.</small>
+                </div>
+
+                <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 100%;">
+                  <md-input placeholder="End Date (required)" [formControl]="attendanceform.controls['endDate']" type="date"></md-input>
+                  <small *ngIf="attendanceform.controls['endDate'].hasError('required') && attendanceform.controls['endDate'].touched" class="md-text-warn">Kindly include a date.</small>
+                </div>
+            </div>
+            <md-card-actions>
+                <button type="submit" [disabled]="!attendanceform.valid" md-raised-button class="shadow-none">Search</button>
+                <!--<button md-raised-button class="warn">Delete</button>-->
+                <button type="button" (click)="resetButton()" md-raised-button color="primary">Cancel</button>
+              </md-card-actions>
+          </form>
+        </md-card-content>
+      </md-card>
+    </div>
+  </div>
+    <ngx-datatable
+    class="material fullscreen"
+    [columns]="percentagecolumns"
+    [sortType]="'multi'"
+    [columnMode]="'force'"
+    [headerHeight]="50"
+    [footerHeight]="50"
+    [rowHeight]="'auto'"
+    [rows]="partnersAttendancePercentage"
+    [selected]="selected"
+    [selectionType]="'single'"
+    [externalPaging]="true"
+    [count]="countPercentage"
+    [offset]="offset"
+    [limit]="limit"
+    (activate)='onActivate($event)'>
+    </ngx-datatable>
+
+  <div fxLayout="row"  fxLayoutWrap="wrap">
+  <div fxFlex.gt-sm="100" fxFlex="100"> 
+      <md-card>
+        <md-card-title></md-card-title>
+        <md-card-content>
+          <h4 style="margin-left: 30%; color: #3F51B5;">DISTRIBUTION OF MARKED ATTENDANCE</h4>
+        </md-card-content>
+      </md-card>
+    </div>
+  </div>
+
+    <ngx-datatable
+    class="material fullscreen"
+    [columns]="columns"
+    [sortType]="'multi'"
+    [columnMode]="'force'"
+    [headerHeight]="50"
+    [footerHeight]="50"
+    [rowHeight]="'auto'"
+    [rows]="partnersAttendance"
+    [selected]="selected"
+    [selectionType]="'single'"
+    [externalPaging]="true"
+    [count]="count"
+    [offset]="offset"
+    [limit]="limit"
+    (activate)='onActivate($event)'>
+    </ngx-datatable>
+
+  
+  
+  

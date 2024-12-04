@@ -1,0 +1,57 @@
+<div *ngIf="loading == true" style="margin: auto;width: 50%;padding: 170px;">
+  <md-progress-spinner _ngcontent-c21="" class="primary mat-progress-spinner" mode="indeterminate" role="progressbar" _nghost-c22="" style="width:60%;">
+    <svg _ngcontent-c22="" preserveAspectRatio="xMidYMid meet" viewBox="0 0 100 100">
+      <path _ngcontent-c22="" d="M67.03072947941752,13.806709829045673A40,40 0 0,1 75.14319329354475,18.890197187969093" style="stroke-width: 10;"></path>
+    </svg>
+  </md-progress-spinner>
+  Loading. Please be patient.
+</div>
+<md-card *ngIf="loading == false">
+  <md-card-title>Attendance data</md-card-title>
+  <md-card-content>
+    <form [formGroup]="form" (ngSubmit)="onSubmit(form.value);">
+      <div  fxLayout="row">
+          <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 50%;">
+            <md-select [formControl]="form.controls['month']"  placeholder="Month">
+              <md-option value="1">January</md-option>
+              <md-option value="2">February</md-option>
+              <md-option value="3">March</md-option>
+              <md-option value="4">April</md-option>
+              <md-option value="5">May</md-option>
+              <md-option value="6">June</md-option>
+              <md-option value="7">July</md-option>
+              <md-option value="8">August</md-option>
+              <md-option value="9">September</md-option>
+              <md-option value="10">October</md-option>
+              <md-option value="11">November</md-option>
+              <md-option value="12">December</md-option>
+            </md-select>
+            <small *ngIf="form.controls['month'].hasError('required') && form.controls['month'].touched" class="md-text-warn">Kindly input the month you want to export.</small>
+          </div>
+
+          <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 50%;">
+            <md-select [formControl]="form.controls['year']"  placeholder="Year">
+              <md-option *ngFor="let item of yearsSelect" value="{{item}}">{{item}}</md-option>
+              <!--<md-option>2016</md-option>-->
+            </md-select>
+            <small *ngIf="form.controls['year'].hasError('required') && form.controls['year'].touched" class="md-text-warn">Kindly input the year you want to export.</small>
+          </div>
+        </div>
+        <div fxLayout="row">
+          <div fxFlex.gt-sm="40" fxFlex.gt-xs="40" fxFlex="100"  class="pr-1">
+            <button md-raised-button md-button-sm class="shadow-none" color="primary" type="submit">Export Attendance File</button>
+          </div>
+        </div>
+        <div fxLayout="row">
+          <br/><br/>
+          <div *ngIf="link && !errror">
+            Click on the button below to download the attendance file.
+            <br/>
+            <a href="{{link}}"><button md-raised-button md-button-sm class="shadow-none" color="primary" type="button">Download Attendance File</button></a>
+          </div>
+          <br/>
+          <div *ngIf="!link && error" style="color: red;">{{error}}</div>
+      </div>
+    </form>
+  </md-card-content>
+</md-card>

@@ -1,0 +1,39 @@
+<div *ngIf="loading == true" class="positioning">
+  <md-progress-spinner _ngcontent-c21="" class="primary mat-progress-spinner" mode="indeterminate" role="progressbar" _nghost-c22="" style="width:60%;">
+    <svg _ngcontent-c22="" preserveAspectRatio="xMidYMid meet" viewBox="0 0 100 100">
+      <path _ngcontent-c22="" d="M67.03072947941752,13.806709829045673A40,40 0 0,1 75.14319329354475,18.890197187969093" style="stroke-width: 10;"></path>
+    </svg>
+  </md-progress-spinner>
+</div>
+<div *ngIf="loading == false">
+  <md-card>
+    <md-card-content>
+      <form [formGroup]="form" (ngSubmit)="searchSchool(form.value);">
+        <md-input placeholder="Search by name" required  [formControl]="form.controls['search']" style="width: 98%" class="mb-1 ml-1 mr-1"></md-input>
+        <small *ngIf="form.controls['search'].hasError('required') && form.controls['search'].touched" class="md-text-warn">Kindly input the partner's name.</small>
+        <md-card-actions>
+          <button type="submit" md-raised-button class="shadow-none">Search</button>
+        </md-card-actions>
+      </form>
+    </md-card-content>
+  </md-card>
+  <ngx-datatable
+    class="material fullscreen"
+    [columns]="columns"
+    [sortType]="'multi'"
+    [columnMode]="'force'"
+    [headerHeight]="50"
+    [footerHeight]="50"
+    [rowHeight]="'auto'"
+    [rows]="partners"
+    [selected]="selected"
+    [selectionType]="'single'"
+    [externalPaging]="true"
+    [count]="count"
+    [offset]="offset"
+    [limit]="limit"
+    (page)='onPage($event)'
+    (activate)='onActivate($event)'
+    (select)='onSelect($event)'>
+  </ngx-datatable>
+</div>

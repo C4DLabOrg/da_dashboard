@@ -1,0 +1,36 @@
+<div class="wrapper">
+  <div  fxLayout="row"  fxLayoutWrap="wrap" fxLayoutAlign="center start">
+    <div fxFlex.gt-sm="90" fxFlex="100">
+      <md-card>
+        <md-card-content>
+          <div  fxLayout="row">
+            <div fxFlex="50">
+            <h4 class="ma-0">{{firstname}}&nbsp;<b>{{lastname}}</b></h4>
+              <p><small>Phone number: </small><br>{{phone}}</p>
+
+              <p><small>Enrolled in Current School on:</small><br>{{dateJoined}}</p>
+
+              <p><small>Gender:</small><br>{{gender}}</p>
+              <!--<button md-raised-button color="primary" (click)="editProfile = true">Edit Profile</button>-->
+              <!--<button md-raised-button color="primary" (click)="open()" [disabled]="dialogRef">Edit Teacher</button>
+              -->
+            </div>
+
+            <div fxFlex="50">
+              <h4 class="ma-0">&nbsp;</h4>
+              <p><small>Classes Assigned: </small></p>
+              <p><small *ngFor="let cl of className">{{cl.name}}&nbsp;&nbsp;</small></p>
+              <!--
+              <p><small>Qualifications: </small><br>College</p>
+            -->
+            </div>
+          </div>
+        </md-card-content>
+        <hr>
+        <md-card-content>
+          <p class="text-xs-center">Please use the provided information for official use only.</p>
+        </md-card-content>
+      </md-card>
+    </div>
+  </div>
+</div>

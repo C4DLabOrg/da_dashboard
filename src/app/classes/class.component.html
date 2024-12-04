@@ -1,0 +1,81 @@
+<div class="wrapper">
+  <div  fxLayout="row"  fxLayoutWrap="wrap" fxLayoutAlign="center start">
+    <div fxFlex.gt-sm="100" fxFlex="100">
+      <md-card>
+        <md-card-content>
+          <div  fxLayout="row">
+            <div fxFlex="50">
+            <h4 class="ma-0"><b>{{className}}</b></h4>
+            <br>
+              <p><small>Number of students: </small><br><b>{{students}}</b></p>
+
+              <!--<button md-raised-button color="primary" (click)="editProfile = true">Edit Profile</button>-->
+            <!--  <button md-raised-button color="primary" (click)="open()" [disabled]="dialogRef">Edit Class</button>
+            -->
+            </div>
+            <div fxFlex="50">
+              <h4 class="ma-0">&nbsp;</h4>
+              <br>
+              <p><small>Boys:&nbsp;</small><b>{{maleNumber}}</b><br><small>Girls:&nbsp;</small><b>{{femaleNumber}}</b></p>
+
+              <!--
+              <button md-raised-button color="warn" (click)="open()" [disabled]="dialogRef">Delete Class</button>
+            -->
+            </div>
+          </div>
+        </md-card-content>
+        <hr>
+        <md-card-content>
+          <p class="text-xs-center">Please use the provided information for official use only.</p>
+        </md-card-content>
+        <hr>
+        <md-card-content>
+          <div *ngIf="promoteStudents">
+            <md-card-actions  class="mat-card-actions">
+              <form [formGroup]="form" (ngSubmit)="promoteAllStudents(form.value);">
+                <div  fxLayout ="row">
+                  <div fxLayout="column" class="mb-2 ml-xs mr-xs" style="width: 100%;">
+                    <md-select required [formControl]="form.controls['className']"  placeholder="Select Class to Promote (required)">
+                      <md-option *ngFor = "let name of classes" value="{{name.id}}">
+                        {{name.class_name}}
+                      </md-option>
+                    </md-select>
+                    <small *ngIf="form.controls['className'].hasError('required') && form.controls['className'].touched" class="md-text-warn">Kindly input the class.</small>
+                  </div>
+                  <div fxLayout="column"class="mb-1 ml-xs mr-xs" style="width: 20%;" >
+                    <button  type="submit" [disabled]="!form.valid" md-raised-button color="primary">Promote All</button>
+                  </div>
+                </div>
+              </form>
+            </md-card-actions>
+            <div *ngIf="promoteError">
+              <b style="color:red;">{{promoteError}}</b>
+            </div>
+          </div>
+        </md-card-content>
+      </md-card>
+    </div>
+  </div>
+  <ngx-datatable
+    class="material fullscreen"
+    [columns]="columns"
+    [sortType]="'multi'"
+    [columnMode]="'force'"
+    [headerHeight]="50"
+    [footerHeight]="50"
+    [rowHeight]="'auto'"
+    [rows]="children"
+    [selected]="selected"
+    [selectionType]= selectionType
+    [externalPaging]="true"
+    [count]="count"
+    [offset]="offset"
+    [limit]="limit"
+    (select)='onSelect($event)'>
+    <ngx-datatable-column *ngIf="promoteStudents" [checkboxable]="true" [sortable]="false"></ngx-datatable-column>
+    <ngx-datatable-column name="name"></ngx-datatable-column>
+    <ngx-datatable-column name="gender"></ngx-datatable-column>
+    <ngx-datatable-column name="guardianphone"></ngx-datatable-column>
+    <ngx-datatable-column name="enrolled"></ngx-datatable-column>
+  </ngx-datatable>
+</div>

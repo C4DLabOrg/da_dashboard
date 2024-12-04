@@ -1,0 +1,82 @@
+<div *ngIf="loading == true" class="positioning">
+  <md-progress-spinner _ngcontent-c21="" class="primary mat-progress-spinner" mode="indeterminate" role="progressbar" _nghost-c22="" style="width:60%;">
+      <svg _ngcontent-c22="" preserveAspectRatio="xMidYMid meet" viewBox="0 0 100 100">
+        <path _ngcontent-c22="" d="M67.03072947941752,13.806709829045673A40,40 0 0,1 75.14319329354475,18.890197187969093" style="stroke-width: 10;"></path>
+      </svg>
+    </md-progress-spinner>
+</div>
+
+<div *ngIf="loading == false">
+<md-card>
+  <md-card-content>
+    <form [formGroup]="form" (ngSubmit)="searchSchool(form);">
+      <md-input placeholder="Search by school name" required  [formControl]="form.controls['search']" style="width: 98%" class="mb-1 ml-1 mr-1"></md-input>
+      <small *ngIf="form.controls['search'].hasError('required') && form.controls['search'].touched" class="md-text-warn">Kindly input a school name.</small>
+      <!-- <br>
+      <md-input placeholder="Search by emis code" required  [formControl]="form.controls['emiscode']" style="width: 98%" class="mb-1 ml-1 mr-1"></md-input>
+      <small *ngIf="form.controls['emiscode'].hasError('required') && form.controls['emiscode'].touched" class="md-text-warn">Kindly input a emis code.</small> -->
+      <md-card-actions>
+        <button type="submit" md-raised-button class="shadow-none">Search</button>
+      </md-card-actions>
+    </form>
+  </md-card-content>
+</md-card>
+<md-card>
+  <md-card-content>
+    <h4>Filter By County</h4>
+    <form *ngIf="partnerLog" [formGroup]="countyForm">
+      <md-select ngModel placeholder="County" [formControl]="countyForm.controls['county']" style="width: 98%" class="mb-1 ml-1 mr-1">
+          <md-option  *ngFor = "let name of countyName" (click)="onSelectCounty(county_name, name.id)" (keyup)="onSelectCounty( name.county_name, name.id)" >
+            {{name.county_name}}
+          </md-option>
+        </md-select>
+    </form>
+  </md-card-content>
+</md-card>
+<ngx-datatable
+  class="material fullscreen"
+  [columns]="columns"
+  [sortType]="'multi'"
+  [columnMode]="'force'"
+  [headerHeight]="50"
+  [footerHeight]="50"
+  [rowHeight]="auto"
+  [rows]="schools"
+  [selected]="selected"
+  [selectionType]="'single'"
+  [externalPaging]="true"
+  [count]="count"
+  [offset]="offset"
+  [limit]="limit"
+  (page)='onPage($event)'
+  (activate)='onActivate($event)'
+  (select)='onSelect($event)'>
+  <ngx-datatable-column 
+    *ngFor="let col of columns" 
+    [name]="col.name"
+    width="300"
+    >
+  </ngx-datatable-column>
+  <ngx-datatable-column *ngIf="partnerId" name="Edit" width="150"> 
+    <template let-value="value" ngx-datatable-cell-template>
+      <button *ngIf="selected" type="button" class="btn-customized" color="primary">
+        Edit
+      </button>
+    </template>
+  </ngx-datatable-column> 
+</ngx-datatable>
+<div class='selected-column' hidden>
+  <h4>Available Columns</h4>
+  <ul>
+    <li *ngFor='let col of allColumns'>
+      <input
+        type='checkbox'
+        [id]="col.name"
+        (click)='toggle(col)'
+        [checked]='isChecked(col)'
+      />
+      <label [attr.for]="col.name">{{col.name}}</label>
+    </li>
+  </ul>
+</div>
+</div>

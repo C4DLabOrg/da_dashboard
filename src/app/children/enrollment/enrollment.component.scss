@@ -1,0 +1,19 @@
+@import "../../../assets/styles/scss/loading/loading";
+
+.datatable,
+.datatable > div,
+.datatable.fixed-header .datatable-header .datatable-header-inner {
+	height: 100%;
+}
+
+
+.btn-customized{
+	background-color: #521DB7; 
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}

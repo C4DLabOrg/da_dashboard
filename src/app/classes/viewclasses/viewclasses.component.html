@@ -1,0 +1,28 @@
+<div *ngIf="loading == true" class="positioning">
+  <md-progress-spinner _ngcontent-c21="" class="primary mat-progress-spinner" mode="indeterminate" role="progressbar" _nghost-c22="" style="width:60%;">
+    <svg _ngcontent-c22="" preserveAspectRatio="xMidYMid meet" viewBox="0 0 100 100">
+      <path _ngcontent-c22="" d="M67.03072947941752,13.806709829045673A40,40 0 0,1 75.14319329354475,18.890197187969093" style="stroke-width: 10;"></path>
+    </svg>
+  </md-progress-spinner>
+</div>
+
+<div *ngIf="loading == false">
+<md-input placeholder="Type the class number to filter..." required (keyup)='updateFilter($event)' style="width: 98%" class="mb-1 ml-1 mr-1"></md-input>
+<ngx-datatable
+class="material fullscreen"
+[columns]="columns"
+[sortType]="'multi'"
+[columnMode]="'force'"
+[headerHeight]="50"
+[footerHeight]="0"
+[rowHeight]="50"
+[scrollbarV]="true"
+[scrollbarH]="true"
+[limit]="100"
+[rows]="classes"
+[selected]="selected"
+[selectionType]="'single'"
+(activate)="onActivate($event)"
+(select)='onSelect($event)'>
+</ngx-datatable>
+</div>

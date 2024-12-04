@@ -1,0 +1,321 @@
+<div fxLayout="row"  fxLayoutWrap="wrap">
+  <div fxFlex.gt-sm="33" fxFlex.gt-xs="50" fxFlex="100">
+    <md-card class="card-widget md-white">
+      <div md-card-widget>
+        <div class="pl-0">
+          <h6 md-card-widget-title><b>{{ partnerName }}</b></h6>
+          <small>Partner Name</small>
+        </div>
+      </div>
+    </md-card>
+  </div>
+  <div fxFlex.gt-sm="34" fxFlex.gt-xs="50" fxFlex="100">
+    <md-card class="card-widget md-white">
+      <div md-card-widget>
+        <div class="pl-0">
+          <h6 md-card-widget-title>{{ partnerEmail }}</h6>
+          <small>Email Address</small>
+        </div>
+      </div>
+    </md-card>
+  </div>
+  <div fxFlex.gt-sm="33" fxFlex.gt-xs="50" fxFlex="100">
+    <md-card class="card-widget md-white">
+      <div md-card-widget>
+        <div class="pl-0">
+          <h6 md-card-widget-title>{{ partnerPhone }}</h6>
+          <small>Phone number</small>
+        </div>
+      </div>
+    </md-card>
+  </div>
+</div>
+
+<div fxLayout="row"  fxLayoutWrap="wrap">
+  <div style = "cursor:pointer;" (click)="getSchools()" fxFlex.gt-sm="20" fxFlex.gt-xs="50" fxFlex="100">
+    <md-card class="card-widget md-teal">
+      <div md-card-widget>
+        <div md-card-float-icon>
+          <md-icon>home</md-icon>
+        </div>
+        <div class="pl-0">
+          <h5 md-card-widget-title>{{ schools }}</h5>
+          <p>Schools</p>
+        </div>
+      </div>
+    </md-card>
+  </div>
+  <div style = "cursor:pointer;" (click)="getRegisteredChildren()" fxFlex.gt-sm="20" fxFlex.gt-xs="50" fxFlex="100">
+    <md-card class="card-widget md-purple">
+      <div md-card-widget>
+        <div md-card-float-icon>
+          <md-icon>person_add</md-icon>
+        </div>
+        <div class="pl-0">
+          <h5 md-card-widget-title> {{ students }} </h5>
+          <p>All Children</p>
+        </div>
+      </div>
+    </md-card>
+  </div>
+  <div fxFlex.gt-sm="20" fxFlex.gt-xs="50" fxFlex="100">
+    <md-card class="card-widget md-indigo">
+      <div md-card-widget>
+        <div md-card-float-icon>
+          <md-icon>people</md-icon>
+        </div>
+        <div class="pl-0">
+          <h5 md-card-widget-title>{{ males }}</h5>
+          <p>Boys</p>
+        </div>
+      </div>
+    </md-card>
+  </div>
+  <div fxFlex.gt-sm="20" fxFlex.gt-xs="50" fxFlex="100">
+    <md-card class="card-widget md-red">
+      <div md-card-widget>
+        <div md-card-float-icon>
+          <md-icon>people_outline</md-icon>
+        </div>
+        <div class="pl-0">
+          <h5 md-card-widget-title>{{ females }}</h5>
+          <p>Girls</p>
+        </div>
+      </div>
+    </md-card>
+  </div>
+  <div  style = "cursor:pointer;" (click)="getDropouts()" fxFlex.gt-sm="20" fxFlex.gt-xs="50" fxFlex="100">
+    <md-card class="card-widget" style="background-color: #CCCC00; color: #fff ">
+      <div md-card-widget>
+        <div md-card-float-icon>
+          <!-- <md-icon>phone</md-icon> -->
+        </div>
+        <div class="pl-0">
+          <h5 md-card-widget-title> {{dropouts}} </h5>
+          <p>Dropouts</p>
+        </div>
+      </div>
+    </md-card>
+  </div>
+</div>
+
+<div fxLayout="row"  fxLayoutWrap="wrap">
+	<div fxFlex.gt-sm="33.33%" fxFlex="100">
+		<md-card>
+      <md-card-title>Daily Attendance</md-card-title>
+      <md-card-subtitle fxLayout="row"  fxLayoutAlign="start center">
+        Aggregated Daily Attendance <span class="font-weight-bold md-text-primary"></span>
+      </md-card-subtitle>
+			<md-card-content>
+        <canvas height="260" baseChart class="chart"
+          [datasets]="barChartData"
+          [labels]="barChartLabels"
+          [options]="barChartOptions"
+          [colors]="barchartColors"
+          [legend]="barChartLegend"
+          [chartType]="barChartType">
+        </canvas>
+      </md-card-content>
+		</md-card>
+	</div>
+	<div fxFlex.gt-sm="33.33%" fxFlex.gt-xs="50" fxFlex="100">
+		<md-card>
+      <md-card-title>Monthly Attendance</md-card-title>
+      <md-card-subtitle fxLayout="row"  fxLayoutAlign="start center">
+      Aggregated: &nbsp;<b>BAR -</b>&nbsp; Presents |&nbsp;<b>LINE - </b>&nbsp; Absents &nbsp; <span class="font-weight-bold md-text-warn"></span>
+      </md-card-subtitle>
+			<md-card-content>
+        <canvas height="260" baseChart class="chart"
+          [datasets]="comboChartData"
+          [labels]="comboChartLabels"
+          [options]="ComboChartOptions"
+          [colors]="chartColors"
+          [legend]="comboChartLegend"
+          [chartType]="barChartType">
+        </canvas>
+      </md-card-content>
+		</md-card>
+	</div>
+    <div fxFlex.gt-sm="33.33%" fxFlex.gt-xs="50" fxFlex="100">
+    <md-card>
+      <md-card-title>Annual Attendance
+        <md-select style="margin-left: 20%; margin-top:-5%; font-weight: 5px; height: 3px;">
+          <md-option *ngFor="let item of annualYear" value="{{item}}" (click)="getYearClicked(item)">{{item}}</md-option>
+        </md-select>
+      </md-card-title>
+      <md-card-subtitle fxLayout="row"  fxLayoutAlign="start center">
+        Aggregated Annual Attendance (%) &nbsp; <span class="font-weight-bold md-text-warn"></span>
+        
+      </md-card-subtitle>
+      <md-card-content>
+        <canvas height="260" baseChart class="chart"
+          [data]="pieChartData"
+          [options]="doughnutOptions"
+          [colors]="doughnutChartColors"
+          [labels]="pieChartLabels"
+          [chartType]="pieChartType">
+        </canvas>
+      </md-card-content>
+    </md-card>
+  </div>
+</div>
+
+<!--
+  Newly enrolled attendance
+-->
+<div fxLayout="row"  fxLayoutWrap="wrap">
+  <div fxFlex.gt-sm="33.33%" fxFlex="100">
+    <md-card>
+      <md-card-title>OOSC Daily Attendance</md-card-title>
+      <md-card-subtitle fxLayout="row"  fxLayoutAlign="start center">
+        Aggregated Daily Attendance <span class="font-weight-bold md-text-primary"></span>
+      </md-card-subtitle>
+      <md-card-content>
+        <canvas height="260" baseChart class="chart"
+          [datasets]="barChartDataEnrolled"
+          [labels]="barChartLabelsEnrolled"
+          [options]="barChartOptions"
+          [colors]="barchartColors"
+          [legend]="barChartLegend"
+          [chartType]="barChartType">
+        </canvas>
+      </md-card-content>
+    </md-card>
+  </div>
+  <div fxFlex.gt-sm="33.33%" fxFlex.gt-xs="50" fxFlex="100">
+    <md-card>
+      <md-card-title>OOSC Monthly Attendance</md-card-title>
+      <md-card-subtitle fxLayout="row"  fxLayoutAlign="start center">
+      Aggregated Monthly Attendance (%) <span class="font-weight-bold md-text-warn"></span>
+      </md-card-subtitle>
+      <md-card-content>
+        <canvas height="260" baseChart class="chart"
+          [datasets]="comboChartDataEnrolled"
+          [labels]="comboChartLabelsEnrolled"
+          [options]="ComboChartOptions"
+          [colors]="chartColors"
+          [legend]="comboChartLegend"
+          [chartType]="barChartType">
+        </canvas>
+      </md-card-content>
+    </md-card>
+  </div>
+  <div fxFlex.gt-sm="33.33%" fxFlex.gt-xs="50" fxFlex="100">
+    <md-card>
+      <md-card-title>OOSC Annual Attendance
+        <md-select style="margin-left: 5%; margin-top:-5%; font-weight: 5px; height: 3px;">
+          <md-option *ngFor="let item of annualYear" value="{{item}}" (click)="getEnrolledYearClicked(item)">{{item}}</md-option>
+        </md-select>
+      </md-card-title>
+      <md-card-subtitle fxLayout="row"  fxLayoutAlign="start center">
+        Aggregated Annual Attendance (%) &nbsp; <span class="font-weight-bold md-text-warn"></span>
+        
+      </md-card-subtitle>
+      <md-card-content>
+        <canvas height="260" baseChart class="chart"
+          [data]="pieChartDataEnrolled"
+          [options]="doughnutOptions"
+          [colors]="doughnutChartColors"
+          [labels]="pieChartLabels"
+          [chartType]="pieChartType">
+        </canvas>
+      </md-card-content>
+    </md-card>
+  </div>
+</div>
+
+
+
+<!--other section-->
+<div fxLayout="row"  fxLayoutWrap="wrap">
+  <div fxFlex.gt-sm="66.66%" fxFlex="100">
+    <md-card>
+      <md-card-title>Children</md-card-title>
+      <md-card-subtitle>Number of children per class in partner's schools</md-card-subtitle>
+      <md-card-content>
+        <canvas height="120" baseChart class="chart"
+          [datasets]="EnrolledComboChartData"
+          [labels]="EnrolledComboChartLabels"
+          [options]="ComboChartOptions"
+          [colors]="EnrolledchartColors"
+          [legend]="comboChartLegend"
+          [chartType]="barChartType">
+        </canvas>
+      </md-card-content>
+    </md-card>
+  </div>
+
+  <!-- pie -->
+  <div fxFlex.gt-sm="33" fxFlex.gt-xs="50" fxFlex="100">
+    <md-card>
+        <md-card-title>Old vs New Children</md-card-title>
+        <md-card-subtitle>Comparison based on gender</md-card-subtitle>
+        <md-card-content>
+          <canvas height="260" baseChart class="chart"
+            [data]="pieChartEnrollmentData"
+            [options]="doughnutOptions"
+            [colors]="doughnutChartColors"
+            [labels]="studentsPieChartLabels"
+            [chartType]="pieChartType">
+          </canvas>
+        </md-card-content>
+    </md-card>
+  </div>
+</div>
+
+
+
+<!--attendances per class-->
+<div fxLayout="row"  fxLayoutWrap="wrap">
+  <div fxFlex.gt-sm="100" fxFlex="100">
+      
+      <md-card>
+        <md-card-title>Classes (Number of days attendance taken per class excluding weekends)</md-card-title>
+        <md-card-content>
+          <form [formGroup]="form" (ngSubmit)="onSubmit(form.value);" >
+            <div  fxLayout="row">
+                <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 30%;margin-top:10px;">
+                  <md-select [formControl]="form.controls['takenAttendance']"   placeholder="Attendance Taken">
+                    <md-option value="true">Yes</md-option>
+                    <md-option value="false">No</md-option>
+                  </md-select>
+                </div>
+
+                <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 100%;">
+                  <md-input placeholder="Start Date (required)" [formControl]="form.controls['startDate']" type="date"></md-input>
+                  <small *ngIf="form.controls['startDate'].hasError('required') && form.controls['startDate'].touched" class="md-text-warn">Kindly include a date.</small>
+                </div>
+
+                <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 100%;">
+                  <md-input placeholder="End Date (required)" [formControl]="form.controls['endDate']" type="date"></md-input>
+                  <small *ngIf="form.controls['endDate'].hasError('required') && form.controls['endDate'].touched" class="md-text-warn">Kindly include a date.</small>
+                </div>
+            </div>
+            <md-card-actions>
+                <button type="submit" [disabled]="!form.valid" md-raised-button class="shadow-none">Search</button>
+                <!--<button md-raised-button class="warn">Delete</button>-->
+                <button type="button" (click)="resetButton()" md-raised-button color="primary">Cancel</button>
+              </md-card-actions>
+          </form>
+        </md-card-content>
+      </md-card>
+      <ngx-datatable
+      class="material fullscreen"
+      [columns]="columns"
+      [sortType]="'multi'"
+      [columnMode]="'force'"
+      [headerHeight]="50"
+      [footerHeight]="50"
+      [rowHeight]="'auto'"
+      [rows]="classes"
+      [selected]="selected"
+      [selectionType]="'single'"
+      [externalPaging]="true"
+      [count]="count"
+      [offset]="offset"
+      [limit]="limit"
+      (page)='onPage($event)'
+      (activate)='onActivate($event)'
+      (select)='onSelect($event)'>
+      </ngx-datatable>
+  </div>

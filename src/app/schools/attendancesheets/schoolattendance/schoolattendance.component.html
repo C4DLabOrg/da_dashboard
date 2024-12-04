@@ -1,0 +1,166 @@
+<div *ngIf="loading == true" style="margin: auto;width: 50%;padding: 170px;">
+  <md-progress-spinner _ngcontent-c21="" class="primary mat-progress-spinner" mode="indeterminate" role="progressbar" _nghost-c22="" style="width:60%;">
+    <svg _ngcontent-c22="" preserveAspectRatio="xMidYMid meet" viewBox="0 0 100 100">
+      <path _ngcontent-c22="" d="M67.03072947941752,13.806709829045673A40,40 0 0,1 75.14319329354475,18.890197187969093" style="stroke-width: 10;"></path>
+    </svg>
+  </md-progress-spinner>
+  Loading. Please be patient.
+</div>
+
+<md-card *ngIf="loading == false">
+  <md-card-content *ngIf="linkStudentDetails">
+      <div fxFlex.gt-sm="40" fxFlex.gt-xs="40" fxFlex="100"  class="pr-1">
+        Click on the button below to download the school students data export file.
+        <br/><br/>
+        <a href="{{linkStudentDetails}}"><button md-raised-button md-button-sm class="shadow-none" color="primary" type="button">Export Students Details File</button></a>
+      </div>
+    </md-card-content>
+</md-card>
+
+<md-card *ngIf="loading == false">
+  <md-card-title>Select the month and year you want to export data for <b style="color: #521DB7">{{schoolName}}</b></md-card-title>
+  <md-card-content>
+    <form [formGroup]="dateform" (ngSubmit)="onSubmit(dateform.value);" >
+        <div  fxLayout="row"><div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 100%;">
+              <md-input placeholder="Start Date (required)" [formControl]="dateform.controls['startDate']" type="date"></md-input>
+              <small *ngIf="dateform.controls['startDate'].hasError('required') && dateform.controls['startDate'].touched" class="md-text-warn">Kindly include a date.</small>
+            </div>
+
+            <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 100%;">
+              <md-input placeholder="End Date (required)" [formControl]="dateform.controls['endDate']" type="date"></md-input>
+              <small *ngIf="dateform.controls['endDate'].hasError('required') && dateform.controls['endDate'].touched" class="md-text-warn">Kindly include a date.</small>
+            </div>
+        </div>
+        <md-card-actions>
+            <button type="submit" [disabled]="!dateform.valid" md-raised-button class="shadow-none">Search</button>
+            <!--<button md-raised-button class="warn">Delete</button>-->
+            <button type="button" (click)="resetButton()" md-raised-button color="primary">Cancel</button>
+          </md-card-actions>
+      </form>
+    </md-card-content>
+  </md-card>
+
+  <md-card *ngIf="loading == false">
+  <!--<md-card-subtitle>Upload excel files in .CSV format</md-card-subtitle>-->
+
+  <!--<md-card-content>
+    <small *ngIf="success" style="color: green;">{{success}}</small>
+    <small *ngIf="fail" style="color: red;">{{fail}}</small>
+    <small *ngIf="importAbort" style="color: red;">{{importAbort}}</small>
+    <div  fxLayout="row"  fxLayoutWrap="wrap"  fxLayoutAlign="start">
+      <div fxFlex.gt-sm="40" fxFlex.gt-xs="40" fxFlex="100"  class="pr-1">
+        <h6 class="mt-0">Select a file</h6>
+        <form [formGroup]="form"  method="post"  enctype="multipart/form-data">
+
+
+          <input id="fileSelect"  [formControl]="form.controls['myfile']" type="file" #myfile name="file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" />
+          <br><br>
+          You need to <b>Verify</b> the data before importing.
+          <button md-raised-button md-button-sm class="shadow-none" color="primary" type="button" (click)="Verifyupload()">Verify</button>
+          <span *ngIf="duplicateData &&!errorDiv && loading==false"><h6 style="color: red;">{{duplicateData}}</h6></span>
+          <span *ngIf="fileError && errorDiv && loading==false"><h6 style="color: red;">{{fileError}}</h6></span>
+          <span *ngIf="verifySuccess && !errorDiv"><h6 style="color: green;">{{verifySuccess}}</h6></span>
+          <br>
+          <div *ngIf="uploadButton" class="mb-1" style="margin-top: 10px;">
+            <button md-raised-button md-button-sm color="primary" (click)="Importupload()" type="button">Upload</button>
+            <button md-raised-button md-button-sm color="warn" (click)="AbortImport()" type="button">Cancel</button>
+            <button md-raised-button md-button-sm color="accent" type="button">Remove</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </md-card-content>-->
+  
+  
+  <md-card-content *ngIf="link">
+    <div fxFlex.gt-sm="40" fxFlex.gt-xs="40" fxFlex="100"  class="pr-1">
+      Click on the button below to download the attendance data export file.
+      <br/><br/>
+      <a href="{{link}}"><button md-raised-button md-button-sm class="shadow-none" color="primary" type="button">Export Students Attendance File</button></a>
+    </div>
+  </md-card-content>
+</md-card>
+
+<md-card *ngIf="loading == false">
+  <md-card-title>Attendance Data File upload</md-card-title>
+  <md-card-subtitle>Upload excel files in .CSV format</md-card-subtitle>
+
+  <md-card-content>
+    <small *ngIf="success" style="color: green;">{{success}}</small>
+    <small *ngIf="fail" style="color: red;">{{fail}}</small>
+    <div  fxLayout="row"  fxLayoutWrap="wrap"  fxLayoutAlign="start">
+      <div fxFlex.gt-sm="40" fxFlex.gt-xs="40" fxFlex="100"  class="pr-1">
+        
+        <form [formGroup]="importForm"  method="post" enctype="multipart/form-data">
+
+          <!--original<input id="fileSelect"  [formControl]="form.controls['myfile']" type="file" (change)="Importupload($event)"  name="file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" />
+          -->
+          <h6 class="mt-0">Select a file</h6>
+          <input id="fileSelect"  [formControl]="importForm.controls['myfile']" type="file" #myfile name="file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" />
+          <br>
+          <div class="mb-1" style="margin-top: 10px;">
+            <button md-raised-button md-button-sm color="primary" (click)="Importupload()" type="button">Upload</button>
+            <button md-raised-button md-button-sm color="warn" (click)="AbortImport()" type="button">Cancel</button>
+            <button md-raised-button md-button-sm color="accent" type="button">Remove</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </md-card-content>
+</md-card>
+
+<!--errors display-->
+<div *ngIf="uploadDiv">
+  <div fxLayout="row"  fxLayoutWrap="wrap">
+    <md-card class="card-widget md-white"></md-card>
+    <div fxFlex.gt-sm="33" fxFlex.gt-xs="50" fxFlex="100">
+      <md-card class="card-widget md-white">
+        <div md-card-widget>
+          <div class="pl-0">
+            <h6 md-card-widget-title><b>{{ total_success }}</b></h6>
+            <small>Total Success (Imported)</small>
+          </div>
+        </div>
+      </md-card>
+    </div>
+    <div fxFlex.gt-sm="34" fxFlex.gt-xs="50" fxFlex="100">
+      <md-card class="card-widget md-white">
+        <div md-card-widget>
+          <div class="pl-0">
+            <h6 md-card-widget-title>{{ total_fails }}</h6>
+            <small>Total Fails (Duplicate data)</small>
+          </div>
+        </div>
+      </md-card>
+    </div>
+    <div fxFlex.gt-sm="33" fxFlex.gt-xs="50" fxFlex="100">
+      <md-card class="card-widget md-white">
+        <div md-card-widget>
+          <div class="pl-0">
+            <h6 md-card-widget-title>{{ success_percentage }}</h6>
+            <small>Success percentage</small>
+          </div>
+        </div>
+      </md-card>
+    </div>
+  </div>
+</div>
+<div *ngIf="errorDiv">
+  <ngx-datatable
+    class="material fullscreen"
+    [columns]="columns"
+    [sortType]="'multi'"
+    [columnMode]="'force'"
+    [headerHeight]="50"
+    [footerHeight]="50"
+    [rowHeight]="auto"
+    [rows]="errors"
+    [selected]="selected"
+    [selectionType]="'single'"
+    [externalPaging]="true"
+    [count]="count"
+    [offset]="offset"
+    [limit]="limit">
+  </ngx-datatable>
+</div>
+

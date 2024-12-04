@@ -1,0 +1,65 @@
+<div *ngIf="loading == true" class="positioning">
+  <md-progress-spinner _ngcontent-c21="" class="primary mat-progress-spinner" mode="indeterminate" role="progressbar" _nghost-c22="" style="width:60%;">
+    <svg _ngcontent-c22="" preserveAspectRatio="xMidYMid meet" viewBox="0 0 100 100">
+      <path _ngcontent-c22="" d="M67.03072947941752,13.806709829045673A40,40 0 0,1 75.14319329354475,18.890197187969093" style="stroke-width: 10;"></path>
+    </svg>
+  </md-progress-spinner>
+</div>
+<div *ngIf="loading == false">
+  <md-card>
+    <md-card-content>
+      <small style="color:red">{{empty}}</small>
+      <form [formGroup]="form" (ngSubmit)="searchChild(form.value);">
+        <!--<div *ngIf="admin || partnerId || partneradminid" fxLayout="row"  style="width: 100%;">
+          <md-select  placeholder="Search Name Type" [formControl]="form.controls['searchType']" class="mb-2" style="width: 20%">
+                <md-option  value="1">Child</md-option>
+                <md-option  value="2">School</md-option>
+          </md-select>
+          <md-input placeholder="Search by name"  [formControl]="form.controls['search']" style="width: 78%; margin-top: -10px;" class="mb-1 ml-1 mr-1"></md-input>
+        </div>-->
+        <div  fxLayout="row"  style="width: 100%;">
+          <md-input placeholder="Search by name"  [formControl]="form.controls['search']" style="width: 98%; margin-top: -10px;" class="mb-1 ml-1 mr-1"></md-input>
+        </div>
+        <br>
+        <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 100%;">
+            Search by Gender
+            <md-select  placeholder="Gender" [formControl]="form.controls['gender']" class="mb-2">
+              <md-option>-</md-option>
+              <md-option  value="M">Male</md-option>
+              <md-option  value="F">Female</md-option>
+            </md-select>
+        </div>
+        <div *ngIf="admin" fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 100%;">
+          Search by Partner
+          <md-select  placeholder="Partner" [formControl]="form.controls['partner']" class="mb-2">
+            <md-option *ngFor = "let name of allpartners" value="{{name.id}}">
+              {{name.name}}
+            </md-option>
+          </md-select>
+        </div>
+        <md-card-actions>
+          <button type="submit" md-raised-button class="shadow-none">Search</button>
+        </md-card-actions>
+      </form>
+    </md-card-content>
+  </md-card>
+    <ngx-datatable
+    class="material fullscreen"
+    [columns]="columns"
+    [sortType]="'multi'"
+    [columnMode]="'force'"
+    [headerHeight]="50"
+    [footerHeight]="50"
+    [rowHeight]="'auto'"
+    [rows]="children"
+    [selected]="selected"
+    [selectionType]="'single'"
+    [externalPaging]="true"
+    [count]="count"
+    [offset]="offset"
+    [limit]="limit"
+    (page)='onPage($event)'
+    (activate)='onActivate($event)'
+    (select)='onSelect($event)'>
+  </ngx-datatable>
+</div>

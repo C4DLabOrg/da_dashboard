@@ -1,0 +1,42 @@
+ <md-toolbar color="primary">
+  <md-toolbar-row>
+  </md-toolbar-row>
+</md-toolbar>
+
+<div  fxLayout="row"  fxLayoutWrap="wrap"  fxLayoutAlign="center start">
+  <div fxFlex.gt-sm="90" fxFlex="100">
+    <md-card class="md-card-top">
+      <md-tab-group>
+        <md-tab>
+          <template md-tab-label>ADD CLASS</template>
+          <md-card-content>
+            <button md-raised-button  style="background-color: #00DB65; color: #fff" *ngIf="success && !fail">{{success}}</button>
+            <button md-raised-button color="warn" *ngIf="fail && !success">{{fail}}</button>
+            <form [formGroup]="form" (ngSubmit)="onSubmit(form.value);">
+              <div  fxLayout="row">
+                <div fxLayout="column"  class="mb-1 ml-xs mr-xs" style="width: 100%;">
+                  <md-select [formControl]="form.controls['class_id']" placeholder="Choose Class (required)">
+                    <md-option *ngFor = "let i of generic_classes" value="{{i}}">
+                      {{i}}
+                    </md-option>
+                  </md-select>
+                  <small *ngIf="form.controls['class_id'].hasError('required') && form.controls['class_id'].touched" class="md-text-warn">Kindly choose a class</small>
+                </div>
+              </div>
+              <div  fxLayout="row">
+                <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 100%;">
+                  <md-input  placeholder="Enter Stream name (optional)"  [formControl]="form.controls['class_name']"  type="text"></md-input>
+                </div>
+              </div>
+              <!-- <hr> -->
+              <md-card-actions>
+                <button type="submit" [disabled]="!form.valid" md-raised-button class="primary">Save</button>
+                <button type="button" (click)="resetButton()" md-raised-button color="shadow-none">Cancel</button>
+              </md-card-actions>
+            </form>
+          </md-card-content>
+        </md-tab>
+      </md-tab-group>
+    </md-card>
+  </div>
+</div>

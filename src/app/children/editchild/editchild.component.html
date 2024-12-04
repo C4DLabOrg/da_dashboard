@@ -1,0 +1,159 @@
+<md-toolbar color="primary">
+  <md-toolbar-row>
+  </md-toolbar-row>
+</md-toolbar>
+
+<div  fxLayout="row"  fxLayoutWrap="wrap"  fxLayoutAlign="center start">
+  <div fxFlex.gt-sm="90" fxFlex="100">
+    <md-card class="md-card-top">
+      <md-tab-group>
+        <md-tab>
+          <template md-tab-label>Child Registration</template>
+          <md-card-content>
+            <small *ngIf="success && !fail" style="color: green;">{{success}}</small>
+            <small *ngIf="fail && !success" style="color: red;">{{fail}}</small>
+            <form [formGroup]="form" (ngSubmit)="onSubmit(form.value);" >
+              <div  fxLayout="row">
+                <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 100%;">
+                  <md-input dividerColor="primary" placeholder="First Name (required)" [formControl]="form.controls['firstName']" value={{firstname}} type="text">
+                    {{firstname}}
+                  </md-input>
+                  <small *ngIf="form.controls['firstName'].hasError('required') && form.controls['firstName'].touched" class="md-text-warn">Kindly include a first name.</small>
+                </div>
+                <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 100%;">
+                  <md-input dividerColor="primary" placeholder="Mid Name"  [formControl]="form.controls['maidenName']" value={{midname}} type="text"  >
+                    {{midname}}
+                  </md-input>
+                </div>
+
+                <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 100%;">
+                  <md-input dividerColor="primary" placeholder="Last Name (required)" [formControl]="form.controls['lastName']" value={{lastname}} type="text" >
+                    {{lastname}}
+                  </md-input>
+                  <small *ngIf="form.controls['lastName'].hasError('required') && form.controls['lastName'].touched" class="md-text-warn">Kindly include a last name.</small>
+                </div>
+              </div>
+
+              <div  fxLayout="row">
+                <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 100%;">
+                  <md-input placeholder="Admission Number" [formControl]="form.controls['admNo']"  value={{admNo}} type="text">{{admNo}}</md-input>
+                </div>
+
+                <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 100%;">
+                  <md-input placeholder="Date Enrolled (required)" [formControl]="form.controls['enrolDate']" value={{enrolDate}} type="date">
+                    {{enrolDate}}
+                  </md-input>
+                  <small *ngIf="form.controls['enrolDate'].hasError('required') && form.controls['enrolDate'].touched" class="md-text-warn">Kindly include a date.</small>
+                  <small *ngIf="form.controls['enrolDate'].hasError('date') || form.controls['enrolDate'].hasError('maxDate') && form.controls['enrolDate'].touched" class="md-text-warn">Kindly include a valid date.</small>
+                </div>
+              </div>
+
+              <div  fxLayout="row">
+                  <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 100%;">
+                    <md-select ngModel style="margin-top:10px;" [formControl]="form.controls['gender']" placeholder="Gender (required)">
+                      <md-option style="visibility: hidden" selected value="{{gender}}">{{gender}}</md-option>
+                      <md-option  value="M">Male</md-option>
+                      <md-option   value="F">Female</md-option>
+                    </md-select>
+                    <small *ngIf="form.controls['gender'].hasError('required') && form.controls['gender'].touched" class="md-text-warn">Kindly input the student's gender.</small>
+                  </div>
+
+                  <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 100%;">
+                    <md-input placeholder="Birthday (required)" [formControl]="form.controls['dateOfBirth']" value={{dob}} type="date">
+                      {{dob}}
+                    </md-input>
+                    <small *ngIf="form.controls['dateOfBirth'].hasError('required') && form.controls['dateOfBirth'].touched" class="md-text-warn">Kindly include a date.</small>
+                    <small *ngIf="form.controls['dateOfBirth'].hasError('date') || form.controls['dateOfBirth'].hasError('maxDate') && form.controls['dateOfBirth'].touched" class="md-text-warn">Kindly include a valid date.</small>
+                  </div>
+              </div>
+
+              <div  fxLayout="row" >
+                <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 30%;margin-top:10px;">
+                  <md-input *ngIf="partnerId" placeholder="Class" [formControl]="form.controls['className']" value={{class}} type="text" readonly>
+                    {{class}}
+                  </md-input>
+                  <md-select *ngIf="schoolId" required [formControl]="form.controls['className']"  placeholder="Class (required)">
+                    <md-option *ngFor = "let name of schoolClasses" value="{{name.id}}">
+                      {{name.class_name}}
+                    </md-option>
+                  </md-select>
+                  <small *ngIf="schoolId && form.controls['className'].hasError('required') && form.controls['className'].touched" class="md-text-warn">Kindly input the class.</small>
+              </div>
+
+                <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 40%;">
+                  <md-input placeholder="Previous Class" [formControl]="form.controls['previousClass']" value={{previousClass}} type="text">
+                    {{previousClass}}
+                  </md-input>
+                  <small *ngIf="form.controls['previousClass'].hasError('required') && form.controls['previousClass'].touched" class="md-text-warn">Kindly input the previous class.</small>
+                  <small *ngIf="form.controls['previousClass'].hasError('number') && form.controls['previousClass'].touched" class="md-text-warn">Kindly input a valid digit.</small>
+                </div>
+
+                <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 30%;margin-top:10px;">
+                  <md-select ngModel [formControl]="form.controls['notInSchool']" placeholder="Been in school before?">
+                    <md-option style="visibility: hidden" selected value="{{is_oosc}}">{{is_oosc}}</md-option>
+                    <md-option value="True">Yes</md-option>
+                    <md-option value="False">No</md-option>
+                  </md-select>
+                  <small *ngIf="form.controls['notInSchool'].hasError('required') && form.controls['notInSchool'].touched" class="md-text-warn">Kindly input a value.</small>
+                </div>
+              </div>
+
+              <div  fxLayout="row">
+                <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 50%;">
+                  <md-select ngModel [formControl]="form.controls['modeOfTransport']"  placeholder="Mode of Transport">
+                    <md-option style="visibility: hidden" selected value="{{mode_of_transport}}">{{mode_of_transport}}</md-option>
+                    <md-option value="Personal Vehicle">Personal Vehicle</md-option>
+                    <md-option value="School Bus">School Bus</md-option>
+                    <md-option value="By Foot">By Foot</md-option>
+                  </md-select>
+                  <small *ngIf="form.controls['modeOfTransport'].hasError('required') && form.controls['modeOfTransport'].touched" class="md-text-warn">Kindly input the child's mode of transport.</small>
+                </div>
+
+                <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 50%;">
+                  <md-select ngModel [formControl]="form.controls['timeToSchool']"  placeholder="Time taken to reach school">
+                    <md-option style="visibility: hidden" selected value="{{time_to_school}}">{{time_to_school}}</md-option>
+                    <md-option value="less than 1/2 Hour">Less than 1/2 hour</md-option>
+                    <md-option value="One hour">1 hour</md-option>
+                    <md-option value="More than one hour.">More than 1 hour</md-option>
+                  </md-select>
+                  <small *ngIf="form.controls['timeToSchool'].hasError('required') && form.controls['timeToSchool'].touched" class="md-text-warn">Kindly input the child's time taken to school.</small>
+                </div>
+              </div>
+
+              <h6>Household Details</h6>
+              <div  fxLayout="row">
+                <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 30%;margin-top:10px;">
+                  <md-select ngModel [formControl]="form.controls['stayWith']"   placeholder="Whom do you stay with?">
+                    <md-option style="visibility: hidden" selected value="{{staywith}}">Parents</md-option>
+                    <md-option value="Parents">Parents</md-option>
+                    <md-option value="Guardians">Guardians</md-option>
+                    <md-option value="Alone">Alone</md-option>
+                  </md-select>
+                </div>
+
+                <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 35%;">
+                  <md-input  placeholder="Number of people in household" [formControl]="form.controls['householdNumber']" value={{household}} type="text">
+                    {{household}}
+                  </md-input>
+                </div>
+
+                <div fxLayout="column"  class="mb-2 ml-xs mr-xs" style="width: 35%;">
+                  <md-input  placeholder="Number of meals/day" [formControl]="form.controls['mealsInDay']" value={{meals}} type="text">
+                    {{meals}}
+                  </md-input>
+                  <small *ngIf="form.controls['mealsInDay'].hasError('number') && form.controls['mealsInDay'].touched" class="md-text-warn">Kindly input a digit.</small>
+                </div>
+              </div>
+
+              <md-card-actions>
+                <button type="submit" md-raised-button class="shadow-none">Save</button>
+                <!--<button md-raised-button class="warn">Delete</button>-->
+                <!--<button type="button" (click)="navigateBack()" md-raised-button color="primary">Back</button>-->
+              </md-card-actions>
+            </form>
+          </md-card-content>
+        </md-tab>
+      </md-tab-group>
+    </md-card>
+  </div>
+</div>

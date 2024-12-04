@@ -1,0 +1,27 @@
+.sebm-google-map-container {
+  height: 550px;
+  width: 1100px;
+}
+.agm-map{
+  height:550px;
+  width:1100px;
+}
+
+
+#map {
+  height: 100%;
+  width: 100%;
+  margin: 0px;
+  padding: 0px
+}
+/* fix for unwanted scroll bar in InfoWindow */
+.scrollFix {
+  line-height: 1.35;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+
+agm-map {
+  height: 450px;
+}

@@ -1,0 +1,29 @@
+<div class="wrapper">
+  
+
+<md-card _ngcontent-c26="" class="mat-card">
+  <md-card-title _ngcontent-c26="" class="mat-card-title ">Account Details</md-card-title>
+  <md-card-subtitle _ngcontent-c26="" class="mat-card-subtitle ">Account Information</md-card-subtitle>
+  <hr _ngcontent-c26="">
+  <md-card-content _ngcontent-c26="" class="mat-card-content">
+    <p>
+      <b>Account Owner: </b> {{name}} | <b>Account Type:</b> {{ usertype }}
+    </p>
+
+  </md-card-content>
+    <md-card-title _ngcontent-c26="" class="mat-card-title ">Contact Information</md-card-title>
+  <hr _ngcontent-c26="">
+  <md-card-content _ngcontent-c26="" class="mat-card-content">
+    <small class="block mt-xs mb-xs"><b>Email:</b> {{email}}</small>
+    <p>
+      <small *ngIf="phone != null" class="block mt-xs mb-xs"><b>Phone:</b> {{phone}}</small>
+      <small *ngIf="phone == null" class="block mt-xs mb-xs"><b>Phone:</b> N/A</small>
+    </p>
+  </md-card-content>
+  <hr _ngcontent-c26="">
+  <md-card-actions _ngcontent-c26="" class="mat-card-actions">
+   <!--  <button md-raised-button color="primary" (click)="editAccount()">Edit Account</button> -->
+  </md-card-actions>
+</md-card>
+</div>
+
